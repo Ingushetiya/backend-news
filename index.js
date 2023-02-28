@@ -1,7 +1,7 @@
 import express from "express"
 import mongoose from "mongoose"
 import multer from "multer"
-
+import cors from "cors"
 import { registerValidator, loginValidator, postCreateValidator } from "./validations/validations.js"
 import { UserController, PostController } from "./controllers/index.js"
 import { checkAuth, handleValidationErrors } from "./utils/index.js"
@@ -21,7 +21,7 @@ const app = express()
 const PORT = 4000
 app.use(express.json())
 app.use("/uploads", express.static('uploads'))
-
+app.use(cors())
 mongoose
   .connect("mongodb+srv://ingushetiya:89286953059aA@cluster0.tgpnukm.mongodb.net/Blog-News")
   .then(() => console.log("Connect DB"))
@@ -41,6 +41,7 @@ app.post('/upload', checkAuth, upload.single("image"), (req, res) => {
   })
 })
 
+app.get("/tags", PostController.getLastTags)
 app.get('/posts', PostController.getAll)
 app.get("/posts/:id", PostController.getOne)
 app.post("/posts", checkAuth, postCreateValidator, handleValidationErrors, PostController.createPost)
