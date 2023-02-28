@@ -2,13 +2,15 @@ import PostModel from "../models/Post.js"
 
 export const getLastTags = async (req, res) => {
   try {
-    const posts = await PostModel.find().limit(5)
-    const tags = posts.map(obj = obj.tags).flat().slice(0, 5)
-    on(tags)
+    const posts = await PostModel.find().limit(5).exec()
+    console.log(posts);
+    const tags = posts.map(obj => obj.tags).flat().slice(0, 5)
+
+    res.json(tags)
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      message: "Не удалось получить статьи"
+      message: "Не удалось получить теги"
     })
   }
 }
