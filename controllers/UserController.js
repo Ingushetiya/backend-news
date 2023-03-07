@@ -98,7 +98,7 @@ export const getMe = async (req, res) => {
   } catch (error) {
     console.log(error)
     res.status(500).json({
-      message: "Нет доступа"
+      message: "Нет доступа user"
     })
 
   }
