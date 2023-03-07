@@ -3,7 +3,6 @@ import PostModel from "../models/Post.js"
 export const getLastTags = async (req, res) => {
   try {
     const posts = await PostModel.find().limit(5).exec()
-    console.log(posts);
     const tags = posts.map(obj => obj.tags).flat().slice(0, 5)
 
     res.json(tags)
@@ -59,6 +58,7 @@ export const remove = async (req, res) => {
   }
 }
 export const getOne = async (req, res) => {
+
   try {
     const postId = req.params.id
     PostModel.findOneAndUpdate(
